@@ -1,7 +1,7 @@
 # Chuchu's Pure Oat Bite – Business Records App
 
 A phone-friendly app for recording sales, expenses, loans and customers in Ghana cedis (GH₵).
-Both partners sign in with their own email and see the same records instantly.
+Partners sign in and see the same records instantly.
 
 - **App hosting:** GitHub Pages (free)
 - **Login + shared database:** Firebase (free "Spark" plan – no card needed)
