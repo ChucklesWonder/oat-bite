@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chuchu's Pure Oat Bite</title>
+<meta name="theme-color" content="#4a2e17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Oat Bite">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4eadb; --bg2:#efe2cd; --card:#fffaf2; --ink:#3a2513; --muted:#8b7156; --line:#e6d6bd;
+  --accent:#b25c26; --accent-d:#8f4517; --honey:#e3a246;
+  --ok:#3c7a4b; --ok-bg:#e3f0e3; --bad:#b0382a; --bad-bg:#f8e1dc; --warn:#9c6a08; --warn-bg:#fbefd3; --info:#2d6884; --info-bg:#dfedf3;
+  --radius:16px; --shadow:0 1px 0 rgba(74,46,23,.06),0 6px 18px -10px rgba(74,46,23,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent;
+  background-image:radial-gradient(circle at 20% 10%,rgba(227,162,70,.10) 0 2px,transparent 3px),radial-gradient(circle at 70% 60%,rgba(139,113,86,.08) 0 2px,transparent 3px);background-size:38px 38px,53px 53px}
+body.noscroll{overflow:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0;letter-spacing:-.01em}
+button{font:inherit;color:inherit}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+
+/* header */
+.top{background:linear-gradient(160deg,#5a3719,#3c2412);color:#fbefdc;padding:calc(14px + env(safe-area-inset-top)) 0 18px;border-bottom:4px solid var(--honey)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f1c27d,#c98a3a 60%,#9c6326);display:grid;place-items:center;font-size:24px;box-shadow:inset -3px -4px 0 rgba(0,0,0,.15)}
+.brand h1{font-size:21px;font-weight:800;line-height:1.1}
+.brand p{margin:2px 0 0;font-size:13px;opacity:.75}
+.demo-banner{background:var(--warn-bg);color:var(--warn);font-size:13px;padding:8px 16px;text-align:center;border-bottom:1px solid #ecd9a8}
+
+/* month bar */
+.monthbar{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px}
+.monthbar h2{font-size:20px}
+.mbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:20px;cursor:pointer}
+
+main{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.section-title{font-family:Fraunces,serif;font-size:17px;margin:22px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+.section-title small{font-family:Figtree;font-size:13px;color:var(--muted);font-weight:500}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:10px;display:block;width:100%;text-align:left}
+.tap{cursor:pointer;transition:transform .08s}
+.tap:active{transform:scale(.985)}
+.hero{background:linear-gradient(150deg,#fffaf2,#fbeed8);padding:18px}
+.hero .label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.hero .big{font-family:Fraunces,serif;font-size:38px;font-weight:800;line-height:1.05;margin:4px 0 2px}
+.hero .big.loss{color:var(--bad)} .hero .big.gain{color:var(--ok)}
+.trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.trio div{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.trio span{display:block;font-size:12px;color:var(--muted)}
+.trio b{font-size:15px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:active{background:var(--accent-d)}
+.btn.soft{background:var(--bg2);color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:transparent;color:var(--bad);border:1px solid #e6b9b1}
+.btn.wide{width:100%}
+.btn.big{padding:16px;font-size:17px}
+.link{background:none;border:0;color:var(--accent);font-weight:600;cursor:pointer;padding:6px 0}
+
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.list-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.list-item:last-child{border-bottom:0}
+.list-item .sub{font-size:13px;color:var(--muted)}
+.amt{font-weight:700;white-space:nowrap}
+.amt.bad{color:var(--bad)} .amt.ok{color:var(--ok)}
+
+/* day groups (like the notebook) */
+.day{margin-bottom:18px}
+.day-head{display:flex;justify-content:space-between;align-items:baseline;padding:6px 4px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.day-head .d{font-family:Fraunces,serif;font-weight:700;font-size:16px}
+.day-head .t{font-size:13px;color:var(--muted)}
+.day-head .t b{color:var(--ink);font-size:15px}
+.order-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.who{font-weight:700}
+.lines{list-style:none;margin:8px 0 0;padding:0;font-size:14px}
+.lines li{display:flex;justify-content:space-between;gap:10px;padding:2px 0;color:#5b4630}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.badge{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px}
+.badge.ok{background:var(--ok-bg);color:var(--ok)} .badge.bad{background:var(--bad-bg);color:var(--bad)}
+.badge.warn{background:var(--warn-bg);color:var(--warn)} .badge.info{background:var(--info-bg);color:var(--info)}
+.badge.muted{background:var(--bg2);color:var(--muted)}
+.note{font-size:13px;color:var(--muted);font-style:italic;width:100%}
+.by{font-size:11px;color:var(--muted);margin-top:6px;text-align:right}
+.chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--bg2);color:var(--muted);margin-left:6px;white-space:nowrap}
+
+.bars .bar{margin:8px 0}
+.bars .bar .row{font-size:14px}
+.bars .track{height:8px;background:var(--bg2);border-radius:99px;overflow:hidden;margin-top:4px}
+.bars .fill{height:100%;background:linear-gradient(90deg,var(--honey),var(--accent));border-radius:99px}
+
+table.rep{width:100%;border-collapse:collapse;font-size:14px}
+table.rep th,table.rep td{padding:9px 6px;text-align:right;border-bottom:1px solid var(--line)}
+table.rep th:first-child,table.rep td:first-child{text-align:left}
+table.rep th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+table.rep tr.tot td{font-weight:800;border-top:2px solid var(--ink);border-bottom:0}
+
+.empty{text-align:center;padding:30px 16px;color:var(--muted)}
+.empty .e{font-size:40px;margin-bottom:6px}
+
+.menu .card{display:flex;align-items:center;gap:14px;padding:16px}
+.menu .ic{width:40px;height:40px;border-radius:12px;background:var(--bg2);display:grid;place-items:center;font-size:20px;flex:none}
+.menu .card div b{display:block}
+.menu .card div span{font-size:13px;color:var(--muted)}
+.back{background:none;border:0;color:var(--accent);font-weight:700;padding:14px 0 0;cursor:pointer;font-size:15px}
+
+/* FAB + nav */
+.fab{position:fixed;right:max(16px,calc(50% - 304px));bottom:calc(84px + env(safe-area-inset-bottom));z-index:20;border:0;border-radius:999px;background:var(--accent);color:#fff;font-weight:800;padding:15px 20px;box-shadow:0 10px 24px -8px rgba(143,69,23,.7);cursor:pointer;font-size:16px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:15;background:rgba(255,250,242,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{background:none;border:0;padding:9px 0 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11.5px;font-weight:600;color:var(--muted);cursor:pointer}
+nav.tabs button .i{font-size:21px;line-height:1;filter:grayscale(.6);opacity:.75}
+nav.tabs button.on{color:var(--accent)}
+nav.tabs button.on .i{filter:none;opacity:1}
+
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:50}
+.sheet-backdrop{position:absolute;inset:0;background:rgba(40,24,10,.45)}
+.sheet-panel{position:absolute;left:0;right:0;bottom:0;max-width:640px;margin:0 auto;max-height:94vh;overflow-y:auto;background:var(--bg);border-radius:22px 22px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.sheet-head h2{font-size:22px}
+.x{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:16px;cursor:pointer}
+.f{display:block;margin-bottom:12px}
+.f>span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:5px}
+.f input,.f select,.f textarea,.line select,.line input{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);outline:none}
+.f input:focus,.f select:focus,.f textarea:focus,.line select:focus,.line input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(178,92,38,.15)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.line{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:8px}
+.line>*+*{margin-top:8px}
+.line-nums{display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:end}
+.line-nums label{font-size:12px;font-weight:700;color:var(--muted)}
+.line-nums label input{margin-top:3px;padding:10px}
+.ln-total{font-weight:800;padding:0 4px 12px;min-width:58px;text-align:right}
+.icon-btn{width:38px;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);cursor:pointer;color:var(--bad)}
+.ex-grid{display:grid;grid-template-columns:1fr 92px 38px;gap:8px;align-items:center}
+.sum-box{display:flex;justify-content:space-between;align-items:baseline;background:#3c2412;color:#fbefdc;border-radius:14px;padding:12px 14px;margin:12px 0}
+.sum-box b{font-family:Fraunces,serif;font-size:24px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg label{text-align:center;padding:10px 4px;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;color:var(--muted)}
+.seg input{display:none}
+.seg label:has(input:checked){background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.check{display:flex;align-items:center;gap:10px;font-weight:600;margin:6px 0 14px}
+.check input{width:22px;height:22px;accent-color:var(--accent)}
+.actions{display:grid;gap:10px;margin-top:8px}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login-card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:28px 22px;text-align:center}
+.logo-big{width:76px;height:76px;margin:0 auto 12px;font-size:40px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 35%,#f1c27d,#c98a3a 60%,#9c6326)}
+.login-card h1{font-size:25px;font-weight:800}
+.login-card form{text-align:left;margin-top:20px}
+.err{color:var(--bad);font-size:14px;min-height:1em}
+.loading{text-align:center;padding:60px 0;color:var(--muted)}
+.spin{width:36px;height:36px;border:4px solid var(--line);border-top-color:var(--accent);border-radius:50%;margin:0 auto 12px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+#toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#2b1a0c;color:#fff;padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading"><div class="spin"></div>Opening…</div></div>
+<div id="sheet" class="sheet hidden"></div>
+<div id="toast"></div>
+
+<script type="module">
+/* ================================================================
+   1) PASTE YOUR FIREBASE SETTINGS HERE (see README.md).
+   While these still say PASTE..., the app runs in DEMO MODE and
+   saves only on the device you are using.
+   ================================================================ */
+const FIREBASE_CONFIG = {
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_PROJECT.firebaseapp.com",
+  projectId: "PASTE_PROJECT",
+  storageBucket: "PASTE_PROJECT.appspot.com",
+  messagingSenderId: "PASTE",
+  appId: "PASTE"
+};
+/* Optional: friendly names shown on records ("added by ...") */
+const PEOPLE = { /* "you@gmail.com": "Chuckles", "partner@gmail.com": "Chuchu" */ };
+
+const DEMO = !FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey.startsWith("PASTE");
+const FB = "https://www.gstatic.com/firebasejs/10.12.2/";
+const COLS = ["sales","expenses","money","customers","products","expenseItems","meta"];
+const EXP_CATS = ["Ingredients","Packaging","Transport","Utilities","Equipment","Marketing","Miscellaneous"];
+const PAID_FROM = ["Sales money (cash)","Bank account","MoMo","Borrowed money (loan)","Personal money"];
+const MONEY_TYPES = {
+  loan_in:  {label:"Borrowed money (loan taken)", sign:+1},
+  loan_out: {label:"Loan repayment",             sign:-1},
+  to_bank:  {label:"Sales money sent to bank",   sign:0},
+  capital:  {label:"Money put into the business", sign:+1},
+  drawing:  {label:"Money taken out by owner",   sign:-1},
+  other:    {label:"Other",                      sign:0}
+};
+const GROUPS = ["Cookies","Pies","Extras"];
+
+/* ---------- Starter price list (from the notebook, latest prices) ---------- */
+const P = {
+  reg30:"Oat cookies – Regular (30 pcs)", gin30:"Oat cookies – Ginger (30 pcs)", cin30:"Oat cookies – Cinnamon (30 pcs)",
+  cho30:"Oat cookies – Choco (30 pcs)",  nut30:"Oat cookies – Nuts (30 pcs)",
+  gin15:"Oat cookies – Ginger (15 pcs)", cho15:"Oat cookies – Choco (15 pcs)",
+  reg7:"Oat cookies – Regular (7 pcs)", gin7:"Oat cookies – Ginger (7 pcs)", cin7:"Oat cookies – Cinnamon (7 pcs)",
+  cho7:"Oat cookies – Choco (7 pcs)", nut7:"Oat cookies – Nuts (7 pcs)",
+  ofish:"Oat fish pie", ochk:"Oat chicken pie", obeef:"Oat beef pie",
+  rfish:"Regular fish pie", rchk:"Regular chicken pie", rbeef:"Regular beef pie",
+  olive:"Extra: olive oil (per pie)"
+};
+const STARTER_PRODUCTS = [
+  ["reg30","Cookies",90],["gin30","Cookies",90],["cin30","Cookies",90],["cho30","Cookies",110],["nut30","Cookies",115],
+  ["gin15","Cookies",55],["cho15","Cookies",65],
+  ["reg7","Cookies",20],["gin7","Cookies",25],["cin7","Cookies",25],["cho7","Cookies",35],["nut7","Cookies",40],
+  ["rfish","Pies",20],["rchk","Pies",25],["rbeef","Pies",25],["ofish","Pies",25],["ochk","Pies",30],["obeef","Pies",30],
+  ["olive","Extras",5]
+].map(([k,g,price],i)=>({id:k,name:P[k],group:g,price,active:true,sort:i}));
+
+/* ---------- Notebook records, July–August 2026 (typed from the photos) ---------- */
+const L = (k,qty,price)=>({product:P[k],qty,price});
+const sale = (id,date,items,o={})=>{const total=items.reduce((a,i)=>a+i.qty*i.price,0);
+  return {id:"nb-s-"+id,date,items,total,paid:o.paid??total,customer:o.customer||"",deliveryDate:"",delivered:true,notes:o.notes||"",createdBy:"notebook",createdAt:0};};
+/* Expense items list (built from the notebook). Edit it in the app: More → Expense items */
+const EXP_ITEM_LIST = {
+  Ingredients:["Oats","Flour","Margarine","Egg","Honey","Chocolate","Chocolate chips","Ginger","Ginger & garlic","Cinnamon","Nutmeg","Vanilla","Flavors",
+    "Coconut","Almonds","Walnuts","Nido","Milk powder","Non-dairy milk powder","K-10 milk","Tuna","Tuna flakes","Canned fish","Chicken","Beef",
+    "Onion","Green pepper","Onga & kivo pepper","Carrot","Vegetables","Curry powder"],
+  Packaging:["Label stickers","Label printout","Containers","Pack (cookies)","Pack for pie","Seal rubber","Tissue paper","Heat gun"],
+  Transport:["Transport","Lorry fare","Delivery fee"],
+  Utilities:["Gas"],
+  Equipment:["Baking sheet","Hand mixer"],
+  Marketing:[], Miscellaneous:[]
+};
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const STARTER_EXP_ITEMS=Object.entries(EXP_ITEM_LIST).flatMap(([category,names])=>names.map((name,i)=>({id:"xi-"+slug(name),name,category,active:true,sort:i})));
+const CAT_OF=Object.fromEntries(STARTER_EXP_ITEMS.map(x=>[x.name,x.category]));
+const exp = (id,date,lines,o={})=>({id:"nb-e-"+id,date,items:lines.map(([item,amount,details=""])=>({item,category:CAT_OF[item]||"Miscellaneous",amount,details})),
+  total:lines.reduce((a,l)=>a+l[1],0),paidFrom:o.from||"",notes:o.notes||"",createdBy:"notebook",createdAt:0});
+const NOTEBOOK = {
+  sales:[
+    sale("20260720","2026-07-20",[L("reg30",3,75),L("ofish",2,25)],{notes:"Delivery Thu/Fri – delivered"}),
+    sale("20260721","2026-07-21",[L("gin30",1,75),L("cho30",1,85),L("nut30",1,90)],{notes:"Delivery Thu/Fri – delivered. Balance paid."}),
+    sale("20260728","2026-07-28",[L("reg7",1,20),L("gin7",1,25),L("cin7",1,25),L("cho7",1,35),L("nut7",1,40),L("ofish",1,25),L("ochk",1,30),L("obeef",1,30),L("olive",8,5),L("rfish",2,20),L("rbeef",3,25)],{customer:"Wizzy",notes:"Delivery Friday. Remaining balance of 70 paid."}),
+    sale("20260804","2026-08-04",[L("cho30",2,90),L("gin30",1,80),L("rchk",6,25)],{notes:"Client order. 10gh change kept on this day. + Rita's pie."}),
+    sale("20260808","2026-08-08",[L("gin30",1,80),L("cho30",1,90),L("rbeef",2,25),L("rchk",2,25)],{notes:"Delivered on the 13th"}),
+    sale("20260809","2026-08-09",[L("rfish",2,20),L("rchk",2,25),L("rbeef",1,25)],{paid:50,notes:"Delivery on 13th. Notebook says paid only 50gh – update if the balance was paid."}),
+    sale("20260811","2026-08-11",[L("nut30",2,95)]),
+    sale("20260820","2026-08-20",[L("gin15",1,55),L("cho15",1,65)],{notes:"Money used to buy items"}),
+    sale("20260821","2026-08-21",[L("nut30",1,115),L("cho30",1,110),L("rfish",2,20),L("rchk",2,25),L("rbeef",1,25)],{notes:"Discounted"}),
+    sale("20260824","2026-08-24",[L("reg30",4,75),L("ofish",2,25)]),
+    sale("20260825","2026-08-25",[L("cho30",2,110),L("rchk",6,25)],{paid:0,notes:"Not paid yet (notebook). Delivery on Monday."}),
+    sale("20260826","2026-08-26",[L("cho30",1,110),L("gin30",1,90)]),
+    sale("20260828","2026-08-28",[L("nut30",2,115),L("reg30",1,90),L("cho30",1,100)],{paid:330,notes:"Regular cookies (90) marked 'not paid' in notebook."}),
+    sale("20260830","2026-08-30",[L("rfish",2,20),L("rchk",1,25),L("rbeef",2,25)],{notes:"Gave Lawrencia 2 pies, Chris 1 pie"})
+  ],
+  expenses:[
+    exp("20260720","2026-07-20",[["Margarine",300],["Egg",10],["Flour",37],["Tuna",45],["Onion",10,"& green pepper"],["Coconut",15]],{notes:"Made pie for Wizzy's friend"}),
+    exp("20260721","2026-07-21",[["Baking sheet",35],["Tissue paper",7]]),
+    exp("20260723","2026-07-23",[["Oats",54,"3"],["Egg",10],["Green pepper",5],["Nido",8],["Ginger",10],["Honey",40],["Non-dairy milk powder",16],["Chocolate",15]],{notes:"Some used for the Tuesday orders"}),
+    exp("20260728","2026-07-28",[["Oats",72,"4"],["Egg",15,"6"],["Chicken",40],["Onion",5],["Green pepper",5],["Carrot",5],["Ginger",10],["Cinnamon",5],["Label stickers",90,"20 pcs"],["Honey",40],["Beef",45],["Chocolate",15],["Canned fish",10],["Flour",37],["Nutmeg",10]],{notes:"Wizzy's orders made from these items"}),
+    exp("20260801","2026-08-01",[["Heat gun",130],["Seal rubber",90],["Label stickers",50],["Lorry fare",16]]),
+    exp("20260804","2026-08-04",[["Oats",34,"2"],["Ginger",10],["Non-dairy milk powder",10],["Chocolate",30],["Vanilla",13],["Flour",37],["Pack (cookies)",6],["Egg",5],["Tissue paper",20],["Onion",5],["Nido",5]]),
+    exp("20260810","2026-08-10",[["Flavors",370],["Nutmeg",80],["Flour",80],["Margarine",120],["Hand mixer",270],["Containers",160,"30 + 10 pcs, paid from bank"],["Transport",15,"for containers"],["Transport",15.5,"Accra"],["Oats",51,"3"],["Egg",10],["Ginger",10],["Vegetables",15],["Milk powder",10],["Chocolate chips",70]],{from:"Borrowed money (loan)",notes:"Borrowed 1200gh on MoMo for these items. Containers paid from bank account."}),
+    exp("20260811","2026-08-11",[["Gas",230,"+ transport"],["Oats",70,"4"],["Tuna",10],["Honey",40],["Egg",10],["Coconut",20,"+ transport"],["Label printout",247,"paid from bank"]]),
+    exp("20260820","2026-08-20",[["Margarine",260],["Oats",30,"2"],["Tuna flakes",17],["Onion",10],["Carrot",10],["Green pepper",10],["Onga & kivo pepper",14],["Curry powder",4],["Non-dairy milk powder",10],["Ginger & garlic",14]],{from:"Bank account",notes:"Notebook day total says 369 – lines add up to 379, please check."}),
+    exp("20260824","2026-08-24",[["Oats",45,"3 × 15gh"],["Honey",40],["Coconut",10,"2"],["Egg",15,"6"],["Non-dairy milk powder",10]]),
+    exp("20260827","2026-08-27",[["Almonds",135,"1½ cup"],["Walnuts",45,"½ cup"],["Delivery fee",25]]),
+    exp("20260828","2026-08-28",[["Oats",102,"6"],["Coconut",15,"3"],["Ginger",20],["Honey",40],["Egg",10,"4"],["K-10 milk",15],["Green pepper",5],["Onion",5]]),
+    exp("20260831","2026-08-31",[["Pack for pie",30,"30 pcs"]])
+  ],
+  money:[
+    {id:"nb-m-20260806",date:"2026-08-06",type:"to_bank",amount:200,notes:"Sent 200 to account from sales money",createdBy:"notebook",createdAt:0},
+    {id:"nb-m-20260810",date:"2026-08-10",type:"loan_in",amount:1200,notes:"Borrowed 1200gh on MoMo to buy items",createdBy:"notebook",createdAt:0},
+    {id:"nb-m-20260820",date:"2026-08-20",type:"loan_out",amount:200,notes:"Paid 200 towards loan",createdBy:"notebook",createdAt:0},
+    {id:"nb-m-20260824",date:"2026-08-24",type:"loan_out",amount:220,notes:"Paid 220 towards loan",createdBy:"notebook",createdAt:0}
+  ],
+  customers:["Wizzy","Rita","Lawrencia","Chris"].map(n=>({id:"nb-c-"+n.toLowerCase(),name:n,phone:"",notes:"",createdBy:"notebook",createdAt:0}))
+};
+
+/* ---------- helpers ---------- */
+function today(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>{const n=parseFloat(v);return Number.isFinite(n)?n:0;};
+const money=v=>"GH₵ "+num(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const short=v=>"₵"+num(v).toLocaleString("en-US",{maximumFractionDigits:2});
+const sum=(arr,f)=>arr.reduce((a,x)=>a+num(f(x)),0);
+const saleTotal=s=>(s.items||[]).reduce((a,i)=>a+num(i.qty)*num(i.price),0);
+const expTotal=e=>(e.items||[]).reduce((a,i)=>a+num(i.amount),0);
+const saleOwed=s=>Math.max(0,Math.round((saleTotal(s)-num(s.paid))*100)/100);
+const dateDesc=(a,b)=>(b.date||"").localeCompare(a.date||"")||num(b.createdAt)-num(a.createdAt);
+function parseD(iso){const [y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d);}
+const fmtDate=iso=>iso?parseD(iso).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
+const fmtShort=iso=>iso?parseD(iso).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}):"";
+const fmtMonth=ym=>{const [y,m]=ym.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("en-GB",{month:"long",year:"numeric"});};
+const shiftMonth=(ym,n)=>{const [y,m]=ym.split("-").map(Number);const d=new Date(y,m-1+n,1);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");};
+function groupBy(arr,fn){const m=new Map();for(const x of arr){const k=fn(x);if(!m.has(k))m.set(k,[]);m.get(k).push(x);}return m;}
+const clean=o=>JSON.parse(JSON.stringify(o));
+const nameOf=e=>!e?"":e==="notebook"?"notebook":PEOPLE[e]||String(e).split("@")[0];
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),2400);}
+const fail=err=>{console.error(err);toast("Could not save: "+(err?.code||err?.message||"error"));};
+
+/* ---------- state ---------- */
+const S={user:null,tab:"home",more:null,month:today().slice(0,7),data:{sales:[],expenses:[],money:[],customers:[],products:[],expenseItems:[],meta:[]},loaded:new Set(),server:new Set(),seed:{}};
+let store=null, sheet=null;
+
+/* ---------- storage: demo (this device only) ---------- */
+function localStore(){
+  const key=c=>"chuchu-oatbite-demo-"+c, subs={};
+  const read=c=>{try{return JSON.parse(localStorage.getItem(key(c))||"[]");}catch{return [];}};
+  const write=(c,a)=>{try{localStorage.setItem(key(c),JSON.stringify(a));}catch{} (subs[c]||[]).forEach(f=>f(a));};
+  const id=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36);
+  return {
+    watch(c,cb){const f=a=>cb(a,false);(subs[c]=subs[c]||[]).push(f);f(read(c));},
+    async add(c,o){write(c,[...read(c),{...clean(o),id:id(),createdBy:"demo",createdAt:Date.now()}]);},
+    async update(c,i,o){write(c,read(c).map(x=>x.id===i?{...x,...clean(o),updatedBy:"demo",updatedAt:Date.now()}:x));},
+    async remove(c,i){write(c,read(c).filter(x=>x.id!==i));},
+    async setMany(c,list){const ids=new Set(list.map(x=>x.id));write(c,read(c).filter(x=>!ids.has(x.id)).concat(clean(list)));},
+    async clearAll(){COLS.forEach(c=>write(c,[]));}
+  };
+}
+
+/* ---------- storage: Firebase (shared between both of you) ---------- */
+async function firebaseStore(){
+  const [appM,authM,fs]=await Promise.all([import(FB+"firebase-app.js"),import(FB+"firebase-auth.js"),import(FB+"firebase-firestore.js")]);
+  const app=appM.initializeApp(FIREBASE_CONFIG);
+  const auth=authM.getAuth(app);
+  let db;
+  try{db=fs.initializeFirestore(app,{localCache:fs.persistentLocalCache({tabManager:fs.persistentMultipleTabManager()})});}
+  catch(e){db=fs.getFirestore(app);}
+  const who=()=>auth.currentUser?.email||"";
+  let unsubs=[];
+  return {
+    auth,authM,
+    watch(c,cb){unsubs.push(fs.onSnapshot(fs.collection(db,c),{includeMetadataChanges:true},snap=>cb(snap.docs.map(d=>({...d.data(),id:d.id})),snap.metadata.fromCache),err=>{console.error(err);toast(err.code==="permission-denied"?"This account is not allowed to see the records":"Sync problem: "+err.code);}));},
+    stopAll(){unsubs.forEach(u=>u());unsubs=[];},
+    add:(c,o)=>fs.addDoc(fs.collection(db,c),clean({...o,createdBy:who(),createdAt:Date.now()})),
+    update:(c,i,o)=>fs.updateDoc(fs.doc(db,c,i),clean({...o,updatedBy:who(),updatedAt:Date.now()})),
+    remove:(c,i)=>fs.deleteDoc(fs.doc(db,c,i)),
+    async setMany(c,list){for(let k=0;k<list.length;k+=400){const b=fs.writeBatch(db);list.slice(k,k+400).forEach(({id,...rest})=>b.set(fs.doc(db,c,id),clean(rest)));await b.commit();}}
+  };
+}
+
+/* ---------- boot ---------- */
+async function boot(){
+  if(DEMO){store=localStore();S.user={email:"demo"};watchAll();return;}
+  try{store=await firebaseStore();}
+  catch(e){console.error(e);document.getElementById("app").innerHTML=`<div class="login"><div class="login-card"><div class="logo-big">🍪</div><h1>Can't connect</h1><p class="muted">Check your internet connection and reload. If this keeps happening, check the Firebase settings at the top of index.html.</p></div></div>`;return;}
+  store.authM.onAuthStateChanged(store.auth,u=>{
+    if(u){S.user=u;watchAll();}
+    else{store.stopAll();S.user=null;S.loaded.clear();COLS.forEach(c=>S.data[c]=[]);render();}
+  });
+}
+function watchAll(){
+  COLS.forEach(c=>store.watch(c,(arr,fromCache)=>{
+    S.data[c]=arr;S.loaded.add(c);if(!fromCache)S.server.add(c);
+    autoSeed();render();
+  }));
+  render();
+}
+/* First time only (checked against the server, never an empty phone cache):
+   load the price list, the expense items list and the notebook records. */
+function autoSeed(){
+  const ok=c=>S.server.has(c);
+  if(ok("products")&&!S.data.products.length&&!S.seed.p){S.seed.p=1;store.setMany("products",STARTER_PRODUCTS).catch(fail);}
+  if(ok("expenseItems")&&!S.data.expenseItems.length&&!S.seed.x){S.seed.x=1;store.setMany("expenseItems",STARTER_EXP_ITEMS).catch(fail);}
+  if(ok("meta")&&ok("sales")&&ok("customers")&&!S.seed.nb&&!S.data.meta.some(m=>m.id==="notebook")){
+    S.seed.nb=1;
+    if(!S.data.sales.some(s=>String(s.id).startsWith("nb-s-")))loadNotebook();
+    store.setMany("meta",[{id:"notebook",loadedAt:Date.now()}]).catch(fail);
+  }
+}
+function loadNotebook(){
+  const known=new Set(S.data.customers.map(c=>(c.name||"").trim().toLowerCase()));
+  const custs=NOTEBOOK.customers.filter(c=>!known.has(c.name.toLowerCase())||S.data.customers.some(x=>x.id===c.id));
+  return Promise.all([store.setMany("sales",NOTEBOOK.sales),store.setMany("expenses",NOTEBOOK.expenses),store.setMany("money",NOTEBOOK.money),store.setMany("customers",custs)]).catch(fail);
+}
+
+/* ---------- derived ---------- */
+const monthSales=ym=>S.data.sales.filter(s=>(s.date||"").startsWith(ym));
+const monthExp=ym=>S.data.expenses.filter(e=>(e.date||"").startsWith(ym));
+const CAT_ORDER=c=>{const i=EXP_CATS.indexOf(c);return i<0?99:i;};
+const sortItems=(a,b)=>(CAT_ORDER(a.category)-CAT_ORDER(b.category))||(num(a.sort)-num(b.sort))||a.name.localeCompare(b.name);
+const activeExpItems=()=>S.data.expenseItems.filter(x=>x.active!==false).sort(sortItems);
+const activeProducts=()=>S.data.products.filter(p=>p.active!==false).sort((a,b)=>(GROUPS.indexOf(a.group)-GROUPS.indexOf(b.group))||(num(a.sort)-num(b.sort))||a.name.localeCompare(b.name));
+function loanBalance(){return sum(S.data.money.filter(m=>m.type==="loan_in"),m=>m.amount)-sum(S.data.money.filter(m=>m.type==="loan_out"),m=>m.amount);}
+function customerNames(){const s=new Map();S.data.customers.forEach(c=>c.name&&s.set(c.name.trim().toLowerCase(),c.name.trim()));S.data.sales.forEach(x=>x.customer&&!s.has(x.customer.trim().toLowerCase())&&s.set(x.customer.trim().toLowerCase(),x.customer.trim()));return [...s.values()].sort();}
+function custStats(name){const n=name.trim().toLowerCase();const ss=S.data.sales.filter(s=>(s.customer||"").trim().toLowerCase()===n);return{count:ss.length,total:sum(ss,saleTotal),owed:sum(ss,saleOwed),last:ss.map(s=>s.date).sort().pop()||""};}
+
+/* ================================================================
+   VIEWS
+   ================================================================ */
+function render(){
+  const app=document.getElementById("app");
+  if(!S.user){app.innerHTML=loginHTML();return;}
+  if(S.loaded.size<COLS.length){app.innerHTML=shell(`<div class="loading"><div class="spin"></div>Loading your records…</div>`,false);return;}
+  const views={home:homeHTML,sales:salesHTML,expenses:expensesHTML,money:moneyHTML,more:moreHTML};
+  app.innerHTML=shell(views[S.tab](),true);
+}
+
+function shell(body,withFab){
+  const fab={home:"",sales:`<button class="fab" data-action="new-sale">＋ Sale</button>`,expenses:`<button class="fab" data-action="new-exp">＋ Expense</button>`,money:`<button class="fab" data-action="new-money">＋ Entry</button>`,
+    more:S.more==="customers"?`<button class="fab" data-action="new-cust">＋ Customer</button>`:S.more==="products"?`<button class="fab" data-action="new-prod">＋ Product</button>`:S.more==="xitems"?`<button class="fab" data-action="new-xitem">＋ Item</button>`:""}[S.tab];
+  const tabs=[["home","🏠","Home"],["sales","🧾","Sales"],["expenses","🛒","Expenses"],["money","💰","Money"],["more","☰","More"]];
+  return `${DEMO?`<div class="demo-banner">Demo mode – records are saved on this device only. Add the Firebase settings to share with your partner.</div>`:""}
+  <header class="top"><div class="wrap brand"><div class="logo">🍪</div><div><h1>Chuchu's Pure Oat Bite</h1><p>${DEMO?"Business records":"Signed in as "+esc(nameOf(S.user.email))}</p></div></div></header>
+  <main class="wrap">${body}</main>
+  ${withFab?fab:""}
+  <nav class="tabs"><div class="in">${tabs.map(([k,i,l])=>`<button class="${S.tab===k?"on":""}" data-action="tab" data-tab="${k}"><span class="i">${i}</span>${l}</button>`).join("")}</div></nav>`;
+}
+
+const monthBar=()=>`<div class="monthbar"><button class="mbtn" data-action="month" data-n="-1" aria-label="Previous month">‹</button><h2>${fmtMonth(S.month)}</h2><button class="mbtn" data-action="month" data-n="1" aria-label="Next month">›</button></div>`;
+
+function homeHTML(){
+  const ms=monthSales(S.month),me=monthExp(S.month);
+  const sales=sum(ms,saleTotal),exp=sum(me,expTotal),profit=sales-exp,collected=sum(ms,s=>Math.min(num(s.paid),saleTotal(s)));
+  const owed=S.data.sales.filter(s=>saleOwed(s)>0).sort(dateDesc);
+  const dels=S.data.sales.filter(s=>!s.delivered&&s.deliveryDate).sort((a,b)=>a.deliveryDate.localeCompare(b.deliveryDate));
+  const t=today(),ts=S.data.sales.filter(s=>s.date===t),te=S.data.expenses.filter(e=>e.date===t);
+  const loan=loanBalance();
+  return `${monthBar()}
+  <div class="card hero">
+    <div class="label">${profit<0?"Loss":"Profit"} this month</div>
+    <div class="big ${profit<0?"loss":"gain"}">${profit<0?"−":""}${money(Math.abs(profit))}</div>
+    <div class="muted" style="font-size:13px">Total sales − total expenses</div>
+    <div class="trio"><div><span>Sales</span><b>${short(sales)}</b></div><div><span>Expenses</span><b>${short(exp)}</b></div><div><span>Cash received</span><b>${short(collected)}</b></div></div>
+    <div class="quick"><button class="btn primary big" data-action="new-sale">＋ Sale</button><button class="btn soft big" data-action="new-exp">＋ Expense</button></div>
+  </div>
+  <div class="card"><div class="row"><b>Today</b><span class="muted" style="font-size:13px">${fmtDate(t)}</span></div>
+    <div class="list-item"><span>Sales for the day</span><span class="amt ok">${money(sum(ts,saleTotal))}</span></div>
+    <div class="list-item"><span>Expenses for the day</span><span class="amt bad">${money(sum(te,expTotal))}</span></div></div>
+  <div class="section-title">Money owed to us <small>${owed.length?money(sum(owed,saleOwed)):""}</small></div>
+  ${owed.length?`<div class="card">${owed.map(s=>`<div class="list-item tap" data-action="edit-sale" data-id="${s.id}"><div><b>${esc(s.customer||"Customer not named")}</b><div class="sub">${fmtDate(s.date)} · order ${short(saleTotal(s))}${num(s.paid)>0?" · paid "+short(s.paid):""}</div></div><span class="amt bad">${short(saleOwed(s))}</span></div>`).join("")}</div>`:`<div class="card empty" style="padding:16px">Everyone has paid 🎉</div>`}
+  <div class="section-title">Deliveries to do</div>
+  ${dels.length?`<div class="card">${dels.map(s=>`<div class="list-item tap" data-action="edit-sale" data-id="${s.id}"><div><b>${esc(s.customer||"Customer not named")}</b><div class="sub">${(s.items||[]).map(i=>num(i.qty)+"× "+esc(i.product)).join(", ")}</div></div><span class="badge ${s.deliveryDate<t?"bad":"info"}">${s.deliveryDate<t?"Late · ":""}${fmtShort(s.deliveryDate)}</span></div>`).join("")}</div>`:`<div class="card empty" style="padding:16px">No deliveries waiting</div>`}
+  ${loan>0?`<div class="section-title">Loan</div><div class="card tap" data-action="tab" data-tab="money"><div class="row"><span>Still owed on loans</span><span class="amt bad">${money(loan)}</span></div></div>`:""}`;
+}
+
+function saleCard(s){
+  const tot=saleTotal(s),owed=saleOwed(s);
+  const pay=owed<=0?`<span class="badge ok">Paid</span>`:num(s.paid)>0?`<span class="badge warn">Owes ${short(owed)}</span>`:`<span class="badge bad">Not paid</span>`;
+  const del=s.delivered?`<span class="badge muted">Delivered</span>`:s.deliveryDate?`<span class="badge info">Deliver ${fmtShort(s.deliveryDate)}</span>`:`<span class="badge info">Not delivered</span>`;
+  return `<div class="card tap" data-action="edit-sale" data-id="${s.id}" role="button" tabindex="0">
+    <div class="order-top"><span class="who">${esc(s.customer||"Customer not named")}</span><span class="amt">${money(tot)}</span></div>
+    <ul class="lines">${(s.items||[]).map(i=>`<li><span>${num(i.qty)} × ${esc(i.product)} <span class="muted">@ ${short(i.price)}</span></span><span>${short(num(i.qty)*num(i.price))}</span></li>`).join("")}</ul>
+    <div class="badges">${pay}${del}${s.notes?`<span class="note">${esc(s.notes)}</span>`:""}</div>
+    ${s.createdBy&&s.createdBy!=="demo"?`<div class="by">added by ${esc(nameOf(s.createdBy))}</div>`:""}</div>`;
+}
+
+function salesHTML(){
+  const ms=monthSales(S.month).sort(dateDesc);
+  if(!ms.length)return monthBar()+`<div class="card empty"><div class="e">🧾</div>No sales recorded in ${fmtMonth(S.month)}.<br>Tap <b>＋ Sale</b> to add one.</div>`;
+  const days=groupBy(ms,s=>s.date);
+  return `${monthBar()}<div class="card"><div class="row"><span>Total sales for the month</span><span class="amt ok">${money(sum(ms,saleTotal))}</span></div><div class="row muted" style="font-size:13px;margin-top:4px"><span>${ms.length} orders</span><span>Still owed ${short(sum(ms,saleOwed))}</span></div></div>
+  ${[...days].map(([d,arr])=>`<section class="day"><div class="day-head"><span class="d">${fmtDate(d)}</span><span class="t">Total for the day <b>${money(sum(arr,saleTotal))}</b></span></div>${arr.map(saleCard).join("")}</section>`).join("")}`;
+}
+
+function catBars(lines){
+  const by=new Map();lines.forEach(l=>by.set(l.category||"Miscellaneous",(by.get(l.category||"Miscellaneous")||0)+num(l.amount)));
+  const arr=[...by].sort((a,b)=>b[1]-a[1]),max=Math.max(1,...arr.map(a=>a[1]));
+  return `<div class="bars">${arr.map(([c,v])=>`<div class="bar"><div class="row"><span>${esc(c)}</span><b>${short(v)}</b></div><div class="track"><div class="fill" style="width:${(v/max*100).toFixed(1)}%"></div></div></div>`).join("")}</div>`;
+}
+
+function expensesHTML(){
+  const me=monthExp(S.month).sort(dateDesc);
+  if(!me.length)return monthBar()+`<div class="card empty"><div class="e">🛒</div>No expenses recorded in ${fmtMonth(S.month)}.<br>Tap <b>＋ Expense</b> to add a shopping trip.</div>`;
+  const days=groupBy(me,e=>e.date);
+  return `${monthBar()}<div class="card"><div class="row"><span>Total expenses for the month</span><span class="amt bad">${money(sum(me,expTotal))}</span></div>${catBars(me.flatMap(e=>e.items||[]))}</div>
+  ${[...days].map(([d,arr])=>`<section class="day"><div class="day-head"><span class="d">${fmtDate(d)}</span><span class="t">Total for the day <b>${money(sum(arr,expTotal))}</b></span></div>
+  ${arr.map(e=>`<div class="card tap" data-action="edit-exp" data-id="${e.id}" role="button" tabindex="0">
+    ${e.paidFrom?`<div class="row" style="font-size:13px"><span class="muted">Paid from: <b style="color:var(--ink)">${esc(e.paidFrom)}</b></span></div>`:""}
+    <ul class="lines">${(e.items||[]).map(i=>`<li><span>${esc(i.item)}${i.details?` <span class="muted">· ${esc(i.details)}</span>`:""}<span class="chip">${esc(i.category)}</span></span><span>${short(i.amount)}</span></li>`).join("")}</ul>
+    ${e.notes?`<div class="badges"><span class="note">${esc(e.notes)}</span></div>`:""}
+    ${e.createdBy&&e.createdBy!=="demo"?`<div class="by">added by ${esc(nameOf(e.createdBy))}</div>`:""}</div>`).join("")}</section>`).join("")}`;
+}
+
+function moneyHTML(){
+  const m=[...S.data.money].sort(dateDesc);
+  const bor=sum(m.filter(x=>x.type==="loan_in"),x=>x.amount),rep=sum(m.filter(x=>x.type==="loan_out"),x=>x.amount);
+  const bank=sum(m.filter(x=>x.type==="to_bank"),x=>x.amount);
+  return `<div class="section-title" style="margin-top:18px">Loans & money movements</div>
+  <div class="card"><div class="list-item"><span>Total borrowed</span><span class="amt">${money(bor)}</span></div>
+  <div class="list-item"><span>Total repaid</span><span class="amt ok">${money(rep)}</span></div>
+  <div class="list-item"><b>Loan still owed</b><span class="amt ${bor-rep>0?"bad":"ok"}">${money(bor-rep)}</span></div>
+  <div class="list-item"><span>Sales money sent to bank</span><span class="amt">${money(bank)}</span></div></div>
+  <p class="muted" style="font-size:13px;margin:4px 4px 12px">Loans and repayments are not counted as sales or expenses. Record the items you buy with borrowed money under Expenses, and record the borrowing here.</p>
+  ${m.length?`<div class="card">${m.map(x=>`<div class="list-item tap" data-action="edit-money" data-id="${x.id}"><div><b>${esc(MONEY_TYPES[x.type]?.label||x.type)}</b><div class="sub">${fmtDate(x.date)}${x.notes?" · "+esc(x.notes):""}</div></div><span class="amt ${x.type==="loan_out"||x.type==="drawing"?"bad":""}">${short(x.amount)}</span></div>`).join("")}</div>`:`<div class="card empty"><div class="e">💰</div>No entries yet.</div>`}`;
+}
+
+function moreHTML(){
+  if(S.more==="customers")return customersHTML();
+  if(S.more==="products")return productsHTML();
+  if(S.more==="reports")return reportsHTML();
+  if(S.more==="data")return dataHTML();
+  if(S.more==="xitems")return xitemsHTML();
+  if(S.more==="prices")return pricesEditHTML();
+  const it=(k,ic,t,d)=>`<div class="card tap" data-action="more" data-v="${k}" role="button" tabindex="0"><span class="ic">${ic}</span><div><b>${t}</b><span>${d}</span></div></div>`;
+  return `<div class="menu" style="margin-top:18px">
+   ${it("reports","📊","Monthly summary","Sales, expenses and profit for every month")}
+   ${it("customers","👥","Customers","Contacts, what they've bought, what they owe")}
+   ${it("products","🏷️","Price list","See, add or change product prices")}
+   ${it("xitems","🧺","Expense items","The list she picks from when adding expenses")}
+   ${it("data","💾","Backup","Download records as spreadsheet files")}
+   ${!DEMO?`<div class="card tap" data-action="signout" role="button" tabindex="0"><span class="ic">🚪</span><div><b>Sign out</b><span>${esc(S.user.email)}</span></div></div>`:""}
+  </div>`;
+}
+const backBtn=`<button class="back" data-action="more" data-v="">‹ Back</button>`;
+
+function reportsHTML(){
+  const months=[...new Set([...S.data.sales,...S.data.expenses].map(x=>(x.date||"").slice(0,7)).filter(Boolean))].sort().reverse();
+  const rows=months.map(m=>{const s=sum(monthSales(m),saleTotal),e=sum(monthExp(m),expTotal);return{m,s,e,p:s-e};});
+  const ms=monthSales(S.month),me=monthExp(S.month);
+  const prod=new Map();ms.flatMap(s=>s.items||[]).forEach(i=>{const p=prod.get(i.product)||{q:0,v:0};p.q+=num(i.qty);p.v+=num(i.qty)*num(i.price);prod.set(i.product,p);});
+  const top=[...prod].sort((a,b)=>b[1].v-a[1].v);
+  return `${backBtn}<div class="section-title">Monthly summary</div>
+  <div class="card">${rows.length?`<table class="rep"><thead><tr><th>Month</th><th>Sales</th><th>Expenses</th><th>Profit</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr><td>${fmtMonth(r.m)}</td><td>${short(r.s)}</td><td>${short(r.e)}</td><td class="amt ${r.p<0?"bad":"ok"}">${r.p<0?"(":""}${short(Math.abs(r.p))}${r.p<0?")":""}</td></tr>`).join("")}
+  <tr class="tot"><td>All time</td><td>${short(sum(rows,r=>r.s))}</td><td>${short(sum(rows,r=>r.e))}</td><td class="${sum(rows,r=>r.p)<0?"amt bad":"amt ok"}">${(t=>t<0?"("+short(-t)+")":short(t))(sum(rows,r=>r.p))}</td></tr></tbody></table>
+  <p class="muted" style="font-size:12px;margin:10px 0 0">Losses are shown in brackets, like (111).</p>`:`<div class="empty">No records yet.</div>`}</div>
+  ${monthBar()}
+  <div class="section-title">Best sellers <small>${fmtMonth(S.month)}</small></div>
+  <div class="card">${top.length?top.map(([n,p])=>`<div class="list-item"><div><b>${esc(n)}</b><div class="sub">${p.q} sold</div></div><span class="amt">${short(p.v)}</span></div>`).join(""):`<div class="empty" style="padding:10px">No sales this month</div>`}</div>
+  <div class="section-title">Where the money went <small>${fmtMonth(S.month)}</small></div>
+  <div class="card">${me.length?catBars(me.flatMap(e=>e.items||[])):`<div class="empty" style="padding:10px">No expenses this month</div>`}</div>`;
+}
+
+function customersHTML(){
+  const saved=new Map(S.data.customers.map(c=>[c.name.trim().toLowerCase(),c]));
+  const names=customerNames();
+  return `${backBtn}<div class="section-title">Customers <small>${names.length}</small></div>
+  ${names.length?`<div class="card">${names.map(n=>{const c=saved.get(n.toLowerCase()),st=custStats(n);
+    return `<div class="list-item tap" data-action="edit-cust" data-name="${esc(n)}"><div><b>${esc(n)}</b><div class="sub">${c?.phone?esc(c.phone)+" · ":""}${st.count} order${st.count===1?"":"s"}${st.last?" · last "+fmtShort(st.last):""}</div></div><div style="text-align:right"><div class="amt">${short(st.total)}</div>${st.owed>0?`<div class="sub" style="color:var(--bad);font-weight:700">owes ${short(st.owed)}</div>`:""}</div></div>`;}).join("")}</div>`
+  :`<div class="card empty"><div class="e">👥</div>No customers yet. They're added automatically when you type a name on a sale.</div>`}`;
+}
+
+function productsHTML(){
+  const all=[...S.data.products].sort((a,b)=>(GROUPS.indexOf(a.group)-GROUPS.indexOf(b.group))||(num(a.sort)-num(b.sort))||a.name.localeCompare(b.name));
+  return `${backBtn}<div class="section-title">Price list</div>
+  <div class="card"><p style="margin:0 0 12px">Changed your prices? Update them all on one screen. New sales use the new prices; past sales keep the price they were sold at.</p>
+  <button class="btn primary wide big" data-action="more" data-v="prices">✏️ Update prices</button></div>
+  ${GROUPS.map(g=>{const ps=all.filter(p=>(p.group||"Extras")===g);return ps.length?`<div class="section-title" style="margin-top:12px">${g}</div><div class="card">${ps.map(p=>{const hist=(p.priceHistory||[]);const prev=hist[hist.length-1];
+    return `<div class="list-item tap" data-action="edit-prod" data-id="${p.id}" style="${p.active===false?"opacity:.45":""}"><div>${esc(p.name)}${p.active===false?' <span class="chip">hidden</span>':""}${prev?`<div class="sub">was ${short(prev.price)} · changed ${fmtShort(prev.until)}</div>`:""}</div><span class="amt">${short(p.price)}</span></div>`;}).join("")}</div>`:"";}).join("")}`;
+}
+function pricesEditHTML(){
+  const all=[...S.data.products].filter(p=>p.active!==false).sort((a,b)=>(GROUPS.indexOf(a.group)-GROUPS.indexOf(b.group))||(num(a.sort)-num(b.sort))||a.name.localeCompare(b.name));
+  return `<button class="back" data-action="more" data-v="products">‹ Price list</button><div class="section-title">Update prices</div>
+  <p class="muted" style="font-size:13px;margin:0 4px 10px">Change any price below, then tap <b>Save new prices</b> at the bottom. Only the ones you change are updated.</p>
+  ${GROUPS.map(g=>{const ps=all.filter(p=>(p.group||"Extras")===g);return ps.length?`<div class="section-title" style="margin-top:12px">${g}</div><div class="card">${ps.map(p=>`<div class="list-item"><span style="flex:1">${esc(p.name)}</span><label style="display:flex;align-items:center;gap:4px;font-weight:700">₵<input class="pe" data-id="${p.id}" data-old="${num(p.price)}" type="number" inputmode="decimal" min="0" step="any" value="${num(p.price)}" style="width:86px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);text-align:right"></label></div>`).join("")}</div>`:"";}).join("")}
+  <div class="actions" style="margin-top:14px"><button class="btn primary big wide" data-action="save-prices">Save new prices</button><button class="btn soft wide" data-action="new-prod">＋ Add a new product</button></div>`;
+}
+function xitemsHTML(){
+  const all=[...S.data.expenseItems].sort(sortItems);
+  return `${backBtn}<div class="section-title">Expense items <small>${all.filter(x=>x.active!==false).length} in the dropdown</small></div>
+  <p class="muted" style="font-size:13px;margin:0 4px 10px">This is the dropdown list on the expense form. New items she types are added here automatically. Tap one to rename it, move it to another category or hide it.</p>
+  ${EXP_CATS.map(c=>{const xs=all.filter(x=>x.category===c);return xs.length?`<div class="section-title" style="margin-top:12px">${c}</div><div class="card">${xs.map(x=>`<div class="list-item tap" data-action="edit-xitem" data-id="${x.id}" style="${x.active===false?"opacity:.45":""}"><span>${esc(x.name)}${x.active===false?' <span class="chip">hidden</span>':""}</span><span class="muted">›</span></div>`).join("")}</div>`:"";}).join("")}`;
+}
+function dataHTML(){
+  return `${backBtn}<div class="section-title">Backup</div>
+  <div class="card"><p style="margin:0 0 12px">Download your records as spreadsheet files (they open in Excel or Google Sheets). Good to do once a month.</p>
+  <div class="actions"><button class="btn soft" data-action="csv" data-c="sales">⬇ Sales</button><button class="btn soft" data-action="csv" data-c="expenses">⬇ Expenses</button><button class="btn soft" data-action="csv" data-c="money">⬇ Loans & money</button></div></div>
+  <div class="section-title">Notebook records (July–August 2026)</div>
+  <div class="card"><p style="margin:0 0 8px">The handwritten records were loaded into the app automatically: ${NOTEBOOK.sales.length} sales days, ${NOTEBOOK.expenses.length} expense days and ${NOTEBOOK.money.length} loan entries.</p>
+  <p class="muted" style="font-size:13px;margin:0 0 12px">Only use this if notebook records were deleted by mistake. It puts back the original notebook copies and undoes any edits made to them.</p>
+  <button class="btn soft wide" data-action="import-nb">Restore notebook records</button></div>
+  ${DEMO?`<div class="section-title">Demo</div><div class="card"><button class="btn danger wide" data-action="clear-demo">Reset demo on this device</button></div>`:""}`;
+}
+function loginHTML(){
+  return `<div class="login"><div class="login-card"><div class="logo-big">🍪</div><h1>Chuchu's Pure Oat Bite</h1><p class="muted" style="margin:4px 0 0">Business records</p>
+  <form id="loginForm"><label class="f"><span>Email</span><input id="l-email" type="email" autocomplete="username" required></label>
+  <label class="f"><span>Password</span><input id="l-pass" type="password" autocomplete="current-password" required></label>
+  <button class="btn primary wide big" type="submit">Sign in</button></form>
+  <button class="link" data-action="reset-pass">Forgot password?</button><p id="l-err" class="err"></p></div></div>`;
+}
+
+/* ================================================================
+   SHEETS (forms)
+   ================================================================ */
+const sheetEl=document.getElementById("sheet");
+function openSheet(html){sheetEl.innerHTML=`<div class="sheet-backdrop" data-action="close"></div><div class="sheet-panel">${html}</div>`;sheetEl.classList.remove("hidden");document.body.classList.add("noscroll");}
+function redrawSheet(html){const p=sheetEl.querySelector(".sheet-panel");const y=p.scrollTop;p.innerHTML=html;p.scrollTop=y;}
+function closeSheet(){sheetEl.classList.add("hidden");sheetEl.innerHTML="";sheet=null;document.body.classList.remove("noscroll");render();}
+const head=t=>`<div class="sheet-head"><h2>${t}</h2><button class="x" data-action="close" aria-label="Close">✕</button></div>`;
+const val=id=>document.getElementById(id)?.value??"";
+
+/* ---- sale ---- */
+function openSale(s){
+  sheet=s?{kind:"sale",id:s.id,date:s.date,customer:s.customer||"",items:structuredClone(s.items||[]).map(i=>({...i,_other:!S.data.products.some(p=>p.name===i.product)})),
+    payMode:saleOwed(s)<=0?"full":num(s.paid)>0?"part":"none",paidAmt:num(s.paid),deliveryDate:s.deliveryDate||"",delivered:!!s.delivered,notes:s.notes||""}
+   :{kind:"sale",date:today(),customer:"",items:[{product:"",qty:1,price:""}],payMode:"full",paidAmt:"",deliveryDate:"",delivered:false,notes:""};
+  openSheet(saleSheetHTML());
+}
+function productOptions(sel,other){
+  const ps=activeProducts();
+  return `<option value="">Choose product…</option>${GROUPS.map(g=>{const xs=ps.filter(p=>(p.group||"Extras")===g);return xs.length?`<optgroup label="${g}">${xs.map(p=>`<option value="${esc(p.name)}" ${!other&&p.name===sel?"selected":""}>${esc(p.name)} – ${short(p.price)}</option>`).join("")}</optgroup>`:"";}).join("")}<option value="__other" ${other?"selected":""}>Something else (type it)</option>`;
+}
+function saleSheetHTML(){
+  const st=sheet,total=st.items.reduce((a,i)=>a+num(i.qty)*num(i.price),0);
+  return `${head(st.id?"Edit sale":"New sale")}
+  <div class="two"><label class="f"><span>Date</span><input id="s-date" type="date" value="${esc(st.date)}"></label>
+  <label class="f"><span>Customer</span><input id="s-cust" list="custlist" placeholder="Name (optional)" value="${esc(st.customer)}" autocomplete="off"></label></div>
+  <datalist id="custlist">${customerNames().map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
+  <div class="f"><span>What did they buy?</span>
+  ${st.items.map((it,i)=>`<div class="line">
+    <select class="ln-prod" data-i="${i}">${productOptions(it.product,it._other)}</select>
+    ${it._other?`<input class="ln-name" data-i="${i}" placeholder="Type the product" value="${esc(it.product)}">`:""}
+    <div class="line-nums"><label>Qty<input class="ln-qty" data-i="${i}" type="number" inputmode="decimal" min="0" step="any" value="${esc(it.qty)}"></label>
+    <label>Price each ₵<input class="ln-price" data-i="${i}" type="number" inputmode="decimal" min="0" step="any" value="${esc(it.price)}"></label>
+    <div class="ln-total" id="lt-${i}">${short(num(it.qty)*num(it.price))}</div>
+    ${st.items.length>1?`<button type="button" class="icon-btn" data-action="rm-line" data-i="${i}" aria-label="Remove line">✕</button>`:"<span></span>"}</div></div>`).join("")}
+  <button class="btn soft wide" data-action="add-line">＋ Add another product</button></div>
+  <div class="sum-box"><span>Total</span><b id="s-total">${money(total)}</b></div>
+  <div class="f"><span>Payment</span><div class="seg">
+    ${[["full","Paid in full"],["part","Part paid"],["none","Not paid"]].map(([k,l])=>`<label><input type="radio" name="paymode" value="${k}" ${st.payMode===k?"checked":""}>${l}</label>`).join("")}</div></div>
+  ${st.payMode==="part"?`<div class="two"><label class="f"><span>Amount paid so far ₵</span><input id="s-paid" type="number" inputmode="decimal" min="0" step="any" value="${esc(st.paidAmt)}"></label><div class="f"><span>Still owed</span><div id="s-owed" style="padding:12px 0;font-weight:800;color:var(--bad)">${money(Math.max(0,total-num(st.paidAmt)))}</div></div></div>`:""}
+  <div class="two"><label class="f"><span>Delivery date</span><input id="s-del" type="date" value="${esc(st.deliveryDate)}"></label>
+  <label class="check" style="margin-top:26px"><input id="s-done" type="checkbox" ${st.delivered?"checked":""}> Delivered</label></div>
+  <label class="f"><span>Notes</span><textarea id="s-notes" rows="2" placeholder="e.g. discounted, olive oil instead of margarine">${esc(st.notes)}</textarea></label>
+  <div class="actions"><button class="btn primary big wide" data-action="save-sale">Save sale</button>${st.id?`<button class="btn danger wide" data-action="del-sale">Delete this sale</button>`:""}</div>`;
+}
+function syncSale(){
+  const st=sheet;if(!st||st.kind!=="sale")return;
+  st.date=val("s-date");st.customer=val("s-cust");st.deliveryDate=val("s-del");st.delivered=!!document.getElementById("s-done")?.checked;st.notes=val("s-notes");
+  if(document.getElementById("s-paid"))st.paidAmt=val("s-paid");
+  document.querySelectorAll(".ln-qty").forEach(el=>st.items[el.dataset.i].qty=el.value);
+  document.querySelectorAll(".ln-price").forEach(el=>st.items[el.dataset.i].price=el.value);
+  document.querySelectorAll(".ln-name").forEach(el=>st.items[el.dataset.i].product=el.value);
+}
+function refreshSaleTotals(){
+  const st=sheet,total=st.items.reduce((a,i)=>a+num(i.qty)*num(i.price),0);
+  st.items.forEach((it,i)=>{const e=document.getElementById("lt-"+i);if(e)e.textContent=short(num(it.qty)*num(it.price));});
+  document.getElementById("s-total").textContent=money(total);
+  const o=document.getElementById("s-owed");if(o)o.textContent=money(Math.max(0,total-num(st.paidAmt)));
+}
+function saveSale(){
+  syncSale();const st=sheet;
+  const items=st.items.filter(i=>String(i.product).trim()&&num(i.qty)>0).map(i=>({product:String(i.product).trim(),qty:num(i.qty),price:num(i.price)}));
+  if(!st.date)return toast("Please choose a date");
+  if(!items.length)return toast("Add at least one product with a quantity");
+  const total=items.reduce((a,i)=>a+i.qty*i.price,0);
+  const paid=st.payMode==="full"?total:st.payMode==="none"?0:Math.min(num(st.paidAmt),total);
+  const rec={date:st.date,customer:st.customer.trim(),items,total,paid,deliveryDate:st.deliveryDate,delivered:st.delivered,notes:st.notes.trim()};
+  (st.id?store.update("sales",st.id,rec):store.add("sales",rec)).catch(fail);
+  const cn=rec.customer.toLowerCase();
+  if(cn&&!S.data.customers.some(c=>(c.name||"").trim().toLowerCase()===cn))store.add("customers",{name:rec.customer,phone:"",notes:""}).catch(fail);
+  closeSheet();toast(st.id?"Sale updated":"Sale saved ✓");
+}
+
+/* ---- expense ---- */
+const isCatalogItem=n=>S.data.expenseItems.some(x=>x.name===n);
+function openExp(e){
+  sheet=e?{kind:"exp",id:e.id,date:e.date,paidFrom:e.paidFrom||"",notes:e.notes||"",items:structuredClone(e.items||[]).map(i=>({details:"",...i,_other:!isCatalogItem(i.item)}))}
+   :{kind:"exp",date:today(),paidFrom:"",notes:"",items:[{item:"",category:"Ingredients",amount:"",details:"",_other:false}]};
+  openSheet(expSheetHTML());
+}
+function lastBought(name){
+  let best=null;S.data.expenses.forEach(e=>(e.items||[]).forEach(i=>{if(i.item===name&&e.id!==sheet?.id&&(!best||e.date>best.date))best={date:e.date,amount:i.amount,details:i.details};}));return best;
+}
+function itemOptions(sel,other){
+  const xs=activeExpItems();
+  if(sel&&!other&&!xs.some(x=>x.name===sel)){const h=S.data.expenseItems.find(x=>x.name===sel);if(h)xs.push(h);}
+  return `<option value="">Choose item…</option>${EXP_CATS.map(c=>{const g=xs.filter(x=>x.category===c);return g.length?`<optgroup label="${c}">${g.map(x=>`<option value="${esc(x.name)}" ${!other&&x.name===sel?"selected":""}>${esc(x.name)}</option>`).join("")}</optgroup>`:"";}).join("")}<option value="__other" ${other?"selected":""}>Something new (type it)</option>`;
+}
+function expSheetHTML(){
+  const st=sheet,total=st.items.reduce((a,i)=>a+num(i.amount),0);
+  return `${head(st.id?"Edit expense":"New expense")}
+  <div class="two"><label class="f"><span>Date</span><input id="e-date" type="date" value="${esc(st.date)}"></label>
+  <label class="f"><span>Paid from</span><select id="e-from"><option value="">Not sure</option>${PAID_FROM.map(p=>`<option ${st.paidFrom===p?"selected":""}>${p}</option>`).join("")}</select></label></div>
+  <div class="f"><span>What was bought?</span>
+  ${st.items.map((it,i)=>{const last=it.item&&!it._other?lastBought(it.item):null;
+    return `<div class="line">
+     <select class="ex-sel" data-i="${i}">${itemOptions(it.item,it._other)}</select>
+     ${it._other?`<div class="two"><input class="ex-item" data-i="${i}" placeholder="New item name" value="${esc(it.item)}"><select class="ex-cat" data-i="${i}">${EXP_CATS.map(c=>`<option ${it.category===c?"selected":""}>${c}</option>`).join("")}</select></div>
+       <div class="muted" style="font-size:12px">It will be added to the list so she can pick it next time.</div>`
+     :it.item?`<div><span class="chip" style="margin:0">${esc(it.category)}</span>${last?`<span class="muted" style="font-size:12px;margin-left:8px">Last time ${short(last.amount)}${last.details?" ("+esc(last.details)+")":""} · ${fmtShort(last.date)}</span>`:""}</div>`:""}
+     <div class="line-nums" style="grid-template-columns:1fr 1fr auto">
+       <label>Qty / details<input class="ex-det" data-i="${i}" placeholder="e.g. 3, 6 pcs" value="${esc(it.details)}"></label>
+       <label>Amount ₵<input class="ex-amt" data-i="${i}" type="number" inputmode="decimal" min="0" step="any" value="${esc(it.amount)}"></label>
+       ${st.items.length>1?`<button type="button" class="icon-btn" data-action="rm-eline" data-i="${i}" aria-label="Remove line">✕</button>`:"<span></span>"}
+     </div></div>`;}).join("")}
+  <button class="btn soft wide" data-action="add-eline">＋ Add another item</button></div>
+  <div class="sum-box"><span>Total for this purchase</span><b id="e-total">${money(total)}</b></div>
+  <label class="f"><span>Notes</span><textarea id="e-notes" rows="2" placeholder="e.g. for Wizzy's order">${esc(st.notes)}</textarea></label>
+  <div class="actions"><button class="btn primary big wide" data-action="save-exp">Save expense</button>${st.id?`<button class="btn danger wide" data-action="del-exp">Delete this expense</button>`:""}</div>`;
+}
+function syncExp(){
+  const st=sheet;if(!st||st.kind!=="exp")return;
+  st.date=val("e-date");st.paidFrom=val("e-from");st.notes=val("e-notes");
+  document.querySelectorAll(".ex-item").forEach(el=>st.items[el.dataset.i].item=el.value);
+  document.querySelectorAll(".ex-cat").forEach(el=>st.items[el.dataset.i].category=el.value);
+  document.querySelectorAll(".ex-det").forEach(el=>st.items[el.dataset.i].details=el.value);
+  document.querySelectorAll(".ex-amt").forEach(el=>st.items[el.dataset.i].amount=el.value);
+}
+function saveExp(){
+  syncExp();const st=sheet;
+  const items=st.items.filter(i=>String(i.item).trim()&&num(i.amount)>0).map(i=>({item:String(i.item).trim(),category:i.category||"Miscellaneous",amount:num(i.amount),details:String(i.details||"").trim()}));
+  if(!st.date)return toast("Please choose a date");
+  if(!items.length)return toast("Choose at least one item and enter the amount");
+  const rec={date:st.date,paidFrom:st.paidFrom,notes:st.notes.trim(),items,total:items.reduce((a,i)=>a+i.amount,0)};
+  (st.id?store.update("expenses",st.id,rec):store.add("expenses",rec)).catch(fail);
+  const known=new Set(S.data.expenseItems.map(x=>x.name.trim().toLowerCase()));
+  items.forEach(i=>{const k=i.item.toLowerCase();if(!known.has(k)){known.add(k);store.add("expenseItems",{name:i.item,category:i.category,active:true,sort:1000}).catch(fail);}});
+  closeSheet();toast(st.id?"Expense updated":"Expense saved ✓");
+}
+
+/* ---- expense item (list entry) ---- */
+function openXItem(x){
+  sheet={kind:"xitem",id:x?.id,oldName:x?.name||""};
+  openSheet(`${head(x?"Edit item":"New expense item")}
+  <label class="f"><span>Item name</span><input id="x-name" placeholder="e.g. Butter" value="${esc(x?.name||"")}"></label>
+  <label class="f"><span>Category</span><select id="x-cat">${EXP_CATS.map(c=>`<option ${(x?.category||"Ingredients")===c?"selected":""}>${c}</option>`).join("")}</select></label>
+  <label class="check"><input id="x-active" type="checkbox" ${x?.active===false?"":"checked"}> Show in the dropdown</label>
+  <p class="muted" style="font-size:13px;margin:0 0 12px">Renaming here doesn't change expenses already recorded.</p>
+  <div class="actions"><button class="btn primary big wide" data-action="save-xitem">Save</button></div>`);
+}
+function saveXItem(){
+  const rec={name:val("x-name").trim(),category:val("x-cat"),active:document.getElementById("x-active").checked};
+  if(!rec.name)return toast("Please add a name");
+  const dupe=S.data.expenseItems.find(x=>x.name.trim().toLowerCase()===rec.name.toLowerCase()&&x.id!==sheet.id);
+  if(dupe)return toast("That item is already on the list");
+  if(!sheet.id)rec.sort=1000;
+  (sheet.id?store.update("expenseItems",sheet.id,rec):store.add("expenseItems",rec)).catch(fail);
+  closeSheet();toast("Expense items updated ✓");
+}
+
+/* ---- money ---- */
+function openMoney(m){
+  sheet={kind:"money",id:m?.id};
+  openSheet(`${head(m?"Edit entry":"Loan / money entry")}
+  <label class="f"><span>Date</span><input id="m-date" type="date" value="${esc(m?.date||today())}"></label>
+  <label class="f"><span>Type</span><select id="m-type">${Object.entries(MONEY_TYPES).map(([k,v])=>`<option value="${k}" ${m?.type===k?"selected":""}>${v.label}</option>`).join("")}</select></label>
+  <label class="f"><span>Amount ₵</span><input id="m-amt" type="number" inputmode="decimal" min="0" step="any" value="${esc(m?.amount??"")}"></label>
+  <label class="f"><span>Notes</span><textarea id="m-notes" rows="2" placeholder="e.g. borrowed on MoMo">${esc(m?.notes||"")}</textarea></label>
+  <div class="actions"><button class="btn primary big wide" data-action="save-money">Save</button>${m?`<button class="btn danger wide" data-action="del-money">Delete</button>`:""}</div>`);
+}
+function saveMoney(){
+  const rec={date:val("m-date"),type:val("m-type"),amount:num(val("m-amt")),notes:val("m-notes").trim()};
+  if(!rec.date||rec.amount<=0)return toast("Add a date and an amount");
+  (sheet.id?store.update("money",sheet.id,rec):store.add("money",rec)).catch(fail);
+  closeSheet();toast("Saved ✓");
+}
+
+/* ---- customer ---- */
+function openCust(name){
+  const c=name?S.data.customers.find(x=>(x.name||"").trim().toLowerCase()===name.toLowerCase()):null;
+  sheet={kind:"cust",id:c?.id,oldName:name||""};
+  const hist=name?S.data.sales.filter(s=>(s.customer||"").trim().toLowerCase()===name.toLowerCase()).sort(dateDesc):[];
+  openSheet(`${head(name?esc(name):"New customer")}
+  <label class="f"><span>Name</span><input id="c-name" value="${esc(c?.name||name||"")}"></label>
+  <label class="f"><span>Phone</span><input id="c-phone" type="tel" inputmode="tel" value="${esc(c?.phone||"")}"></label>
+  <label class="f"><span>Notes</span><textarea id="c-notes" rows="2" placeholder="e.g. likes choco, delivers to East Legon">${esc(c?.notes||"")}</textarea></label>
+  <div class="actions"><button class="btn primary big wide" data-action="save-cust">Save</button>${c?`<button class="btn danger wide" data-action="del-cust">Remove from customer list</button>`:""}</div>
+  ${hist.length?`<div class="section-title">Orders</div><div class="card">${hist.map(s=>`<div class="list-item"><div><b>${fmtDate(s.date)}</b><div class="sub">${(s.items||[]).map(i=>num(i.qty)+"× "+esc(i.product)).join(", ")}</div></div><div style="text-align:right"><div class="amt">${short(saleTotal(s))}</div>${saleOwed(s)>0?`<div class="sub" style="color:var(--bad)">owes ${short(saleOwed(s))}</div>`:""}</div></div>`).join("")}</div>`:""}`);
+}
+function saveCust(){
+  const rec={name:val("c-name").trim(),phone:val("c-phone").trim(),notes:val("c-notes").trim()};
+  if(!rec.name)return toast("Please add a name");
+  (sheet.id?store.update("customers",sheet.id,rec):store.add("customers",rec)).catch(fail);
+  if(sheet.oldName&&sheet.oldName!==rec.name)S.data.sales.filter(s=>(s.customer||"").trim().toLowerCase()===sheet.oldName.toLowerCase()).forEach(s=>store.update("sales",s.id,{customer:rec.name}).catch(fail));
+  closeSheet();toast("Customer saved ✓");
+}
+
+/* ---- product ---- */
+function openProd(p){
+  sheet={kind:"prod",id:p?.id};
+  openSheet(`${head(p?"Edit product":"New product")}
+  <label class="f"><span>Name</span><input id="p-name" placeholder="e.g. Oat cookies – Coconut (30 pcs)" value="${esc(p?.name||"")}"></label>
+  <div class="two"><label class="f"><span>Group</span><select id="p-group">${GROUPS.map(g=>`<option ${(p?.group||"Cookies")===g?"selected":""}>${g}</option>`).join("")}</select></label>
+  <label class="f"><span>Usual price ₵</span><input id="p-price" type="number" inputmode="decimal" min="0" step="any" value="${esc(p?.price??"")}"></label></div>
+  <label class="check"><input id="p-active" type="checkbox" ${p?.active===false?"":"checked"}> Show on the sale form</label>
+  <p class="muted" style="font-size:13px;margin:0 0 12px">Changing a price only affects new sales. Old sales keep the price they were sold at.</p>
+  <div class="actions"><button class="btn primary big wide" data-action="save-prod">Save</button></div>`);
+}
+function priceChange(p,newPrice){
+  const old=num(p.price);if(old===newPrice)return {};
+  return {price:newPrice,priceHistory:[...(p.priceHistory||[]),{price:old,until:today()}]};
+}
+function saveProd(){
+  const rec={name:val("p-name").trim(),group:val("p-group"),price:num(val("p-price")),active:document.getElementById("p-active").checked};
+  if(!rec.name)return toast("Please add a name");
+  if(sheet.id){const p=S.data.products.find(x=>x.id===sheet.id);Object.assign(rec,priceChange(p,rec.price));store.update("products",sheet.id,rec).catch(fail);}
+  else{rec.sort=1000+S.data.products.length;store.add("products",rec).catch(fail);}
+  closeSheet();toast("Price list updated ✓");
+}
+function savePrices(){
+  let n=0;
+  document.querySelectorAll("input.pe").forEach(el=>{const p=S.data.products.find(x=>x.id===el.dataset.id);if(!p||el.value==="")return;const ch=priceChange(p,num(el.value));if(ch.priceHistory){n++;store.update("products",p.id,ch).catch(fail);}});
+  if(!n)return toast("No prices were changed");
+  S.more="products";render();window.scrollTo(0,0);toast(n+" price"+(n===1?"":"s")+" updated ✓");
+}
+
+/* ---- csv ---- */
+function csv(rows){return rows.map(r=>r.map(v=>{v=String(v??"");return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(",")).join("\r\n");}
+function download(name,text){const b=new Blob(["\ufeff"+text],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},800);}
+function exportCSV(c){
+  const d=today();
+  if(c==="sales"){const r=[["Date","Customer","Product","Qty","Price","Line total","Order total","Paid","Owed","Delivery date","Delivered","Notes","Added by"]];
+    [...S.data.sales].sort(dateDesc).forEach(s=>(s.items||[]).forEach((i,k)=>r.push([s.date,s.customer,i.product,i.qty,i.price,num(i.qty)*num(i.price),k?"":saleTotal(s),k?"":num(s.paid),k?"":saleOwed(s),s.deliveryDate,s.delivered?"yes":"no",k?"":s.notes,nameOf(s.createdBy)])));
+    download(`oatbite-sales-${d}.csv`,csv(r));}
+  if(c==="expenses"){const r=[["Date","Item","Qty / details","Category","Amount","Paid from","Notes","Added by"]];
+    [...S.data.expenses].sort(dateDesc).forEach(e=>(e.items||[]).forEach((i,k)=>r.push([e.date,i.item,i.details||"",i.category,i.amount,e.paidFrom,k?"":e.notes,nameOf(e.createdBy)])));
+    download(`oatbite-expenses-${d}.csv`,csv(r));}
+  if(c==="money"){const r=[["Date","Type","Amount","Notes"]];[...S.data.money].sort(dateDesc).forEach(m=>r.push([m.date,MONEY_TYPES[m.type]?.label||m.type,m.amount,m.notes]));download(`oatbite-money-${d}.csv`,csv(r));}
+}
+
+/* ================================================================
+   EVENTS
+   ================================================================ */
+const A={
+  tab:a=>{S.tab=a.dataset.tab;S.more=null;render();window.scrollTo(0,0);},
+  month:a=>{S.month=shiftMonth(S.month,+a.dataset.n);render();},
+  more:a=>{S.more=a.dataset.v||null;render();window.scrollTo(0,0);},
+  close:()=>closeSheet(),
+  "new-sale":()=>openSale(null),
+  "edit-sale":a=>{const s=S.data.sales.find(x=>x.id===a.dataset.id);if(s)openSale(s);},
+  "add-line":()=>{syncSale();sheet.items.push({product:"",qty:1,price:""});redrawSheet(saleSheetHTML());},
+  "rm-line":a=>{syncSale();sheet.items.splice(+a.dataset.i,1);redrawSheet(saleSheetHTML());},
+  "save-sale":saveSale,
+  "del-sale":()=>{if(confirm("Delete this sale? This can't be undone.")){store.remove("sales",sheet.id).catch(fail);closeSheet();toast("Sale deleted");}},
+  "new-exp":()=>openExp(null),
+  "edit-exp":a=>{const e=S.data.expenses.find(x=>x.id===a.dataset.id);if(e)openExp(e);},
+  "add-eline":()=>{syncExp();sheet.items.push({item:"",category:"Ingredients",amount:"",details:"",_other:false});redrawSheet(expSheetHTML());},
+  "rm-eline":a=>{syncExp();sheet.items.splice(+a.dataset.i,1);redrawSheet(expSheetHTML());},
+  "save-exp":saveExp,
+  "del-exp":()=>{if(confirm("Delete this expense? This can't be undone.")){store.remove("expenses",sheet.id).catch(fail);closeSheet();toast("Expense deleted");}},
+  "new-money":()=>openMoney(null),
+  "edit-money":a=>{const m=S.data.money.find(x=>x.id===a.dataset.id);if(m)openMoney(m);},
+  "save-money":saveMoney,
+  "del-money":()=>{if(confirm("Delete this entry?")){store.remove("money",sheet.id).catch(fail);closeSheet();}},
+  "new-cust":()=>openCust(null),
+  "edit-cust":a=>openCust(a.dataset.name),
+  "save-cust":saveCust,
+  "del-cust":()=>{if(confirm("Remove from the customer list? Their past sales stay.")){store.remove("customers",sheet.id).catch(fail);closeSheet();}},
+  "new-prod":()=>openProd(null),
+  "edit-prod":a=>openProd(S.data.products.find(x=>x.id===a.dataset.id)),
+  "save-prod":saveProd,
+  csv:a=>exportCSV(a.dataset.c),
+  "import-nb":()=>{if(!confirm("Put back the original notebook records? Edits made to them will be undone."))return;loadNotebook();toast("Notebook records restored ✓");},
+  "clear-demo":()=>{if(confirm("Reset the demo on this device? It goes back to just the notebook records.")){S.seed={};store.clearAll();toast("Demo reset");}},
+  "save-prices":savePrices,
+  "edit-xitem":a=>openXItem(S.data.expenseItems.find(x=>x.id===a.dataset.id)),
+  "new-xitem":()=>openXItem(null),
+  "save-xitem":saveXItem,
+  signout:()=>{if(confirm("Sign out?"))store.authM.signOut(store.auth);},
+  "reset-pass":async()=>{const e=document.getElementById("l-email").value.trim();const err=document.getElementById("l-err");
+    if(!e){err.textContent="Type your email above first, then tap Forgot password.";return;}
+    try{await store.authM.sendPasswordResetEmail(store.auth,e);err.style.color="var(--ok)";err.textContent="Password reset email sent. Check your inbox.";}catch(x){err.textContent="Could not send reset email ("+x.code+").";}}
+};
+document.addEventListener("click",e=>{const a=e.target.closest("[data-action]");if(!a)return;const f=A[a.dataset.action];if(f){e.preventDefault();f(a,e);}});
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches("[role=button][data-action]")){e.preventDefault();e.target.click();}});
+document.addEventListener("input",e=>{
+  if(sheet?.kind==="sale"&&e.target.matches(".ln-qty,.ln-price,#s-paid,.ln-name")){syncSale();refreshSaleTotals();}
+  if(sheet?.kind==="exp"&&e.target.matches(".ex-amt")){syncExp();document.getElementById("e-total").textContent=money(sheet.items.reduce((a,i)=>a+num(i.amount),0));}
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(sheet?.kind==="sale"&&t.matches(".ln-prod")){syncSale();const it=sheet.items[t.dataset.i];
+    if(t.value==="__other"){it._other=true;it.product="";}
+    else{it._other=false;it.product=t.value;const p=S.data.products.find(x=>x.name===t.value);if(p)it.price=p.price;}
+    redrawSheet(saleSheetHTML());}
+  if(sheet?.kind==="sale"&&t.name==="paymode"){syncSale();sheet.payMode=t.value;redrawSheet(saleSheetHTML());}
+  if(sheet?.kind==="exp"&&t.matches(".ex-sel")){syncExp();const it=sheet.items[t.dataset.i];
+    if(t.value==="__other"){it._other=true;it.item="";it.category="Ingredients";}
+    else{it._other=false;it.item=t.value;it.category=S.data.expenseItems.find(x=>x.name===t.value)?.category||"Miscellaneous";}
+    redrawSheet(expSheetHTML());}
+});
+document.addEventListener("submit",async e=>{
+  if(e.target.id!=="loginForm")return;e.preventDefault();
+  const err=document.getElementById("l-err");err.style.color="";err.textContent="Signing in…";
+  try{await store.authM.signInWithEmailAndPassword(store.auth,val("l-email").trim(),val("l-pass"));}
+  catch(x){err.textContent=["auth/invalid-credential","auth/wrong-password","auth/user-not-found","auth/invalid-email"].includes(x.code)?"Wrong email or password.":x.code==="auth/network-request-failed"?"No internet connection.":"Could not sign in ("+x.code+").";}
+});
+
+boot();
+</script>
+</body>
+</html>
