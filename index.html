@@ -415,7 +415,7 @@ function shell(body,withFab){
   const tabs=[["home","🏠","Home"],["sales","🧾","Sales"],["expenses","🛒","Expenses"],["money","💰","Money"],["more","☰","More"]];
   return `${DEMO?`<div class="demo-banner">Demo mode – records are saved on this device only. Add the Firebase settings to share with your partner.</div>`:""}
   <header class="top"><div class="wrap brand"><div class="logo">🍪</div><div><h1>Chuchu's Pure Oat Bite</h1><p>${DEMO?"Business records":"Signed in as "+esc(nameOf(S.user.email))}</p></div></div></header>
-  <main class="wrap">${body}</main>
+  <main class="wrap">${body}<div style="height:calc(160px + env(safe-area-inset-bottom))"></div></main>
   ${withFab?fab:""}
   <nav class="tabs"><div class="in">${tabs.map(([k,i,l])=>`<button class="${S.tab===k?"on":""}" data-action="tab" data-tab="${k}"><span class="i">${i}</span>${l}</button>`).join("")}</div></nav>`;
 }
@@ -506,7 +506,7 @@ function moreHTML(){
   if(S.more==="xitems")return xitemsHTML();
   if(S.more==="prices")return pricesEditHTML();
   const it=(k,ic,t,d)=>`<div class="card tap" data-action="more" data-v="${k}" role="button" tabindex="0"><span class="ic">${ic}</span><div><b>${t}</b><span>${d}</span></div></div>`;
-  return `<div class="menu" style="margin-top:18px">
+  return `<p class="muted" style="text-align:center;font-size:12px;margin:14px 0 0">App version 1.2</p><div class="menu" style="margin-top:18px">
    ${it("reports","📊","Monthly summary","Sales, expenses and profit for every month")}
    ${it("customers","👥","Customers","Contacts, what they've bought, what they owe")}
    ${it("products","🏷️","Price list","See, add or change product prices")}
