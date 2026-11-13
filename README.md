@@ -3,13 +3,7 @@
 A phone-friendly app for recording sales, expenses, loans and customers in Ghana cedis (GH₵).
 Partners sign in and see the same records instantly.
 
-- **App hosting:** GitHub Pages (free)
-- **Login + shared database:** Firebase (free "Spark" plan – no card needed)
-- **Works with weak internet:** records entered offline are kept on the phone and sync when the connection returns.
 
-You can open `index.html` right now to try it in **demo mode** (saves on that device only). It becomes shared once you finish Part A.
-
----
 
 ## Part A – Firebase (about 10 minutes, no coding)
 
